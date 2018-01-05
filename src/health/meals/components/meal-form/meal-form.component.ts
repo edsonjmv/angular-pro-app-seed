@@ -46,7 +46,7 @@ import { Meal } from '../../../shared/services/meals/meals.service';
 
           <div formArrayName='ingredients'>
             <label *ngFor='let c of ingredients.controls; index as i;'>
-              <input [formControlName]="i" placeholder="e.g Eggs">
+              <input [formControlName]="i" placeholder="e.g Eggs" (keyup.enter)='addIngredient()'>
               <span
                 class='meal-form__remove'
                 (click)='removeIngredient(i)'>
