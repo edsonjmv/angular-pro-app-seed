@@ -6,7 +6,7 @@ import { Store } from "store";
 
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Observable";
-import { Subject } from 'rxjs/Subject';
+import { Subject } from "rxjs/Subject";
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/switchMap";
@@ -34,12 +34,14 @@ export interface ScheduleList {
 
 @Injectable()
 export class ScheduleService {
-
   private date$ = new BehaviorSubject(new Date());
   private section$ = new Subject();
 
-  selected$ = this.section$
-    .do((next: any) => this.store.set('selected', next));
+  selected$ = this.section$.do((next: any) => this.store.set("selected", next));
+
+  list$ = this.section$
+    .map((value: any) => this.store.value[value.type])
+    .do((next: any) => this.store.set("list", next));
 
   schedule$: Observable<ScheduleItem[]> = this.date$
     .do((next: any) => this.store.set("date", next))
